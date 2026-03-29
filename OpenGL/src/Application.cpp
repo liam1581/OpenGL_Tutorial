@@ -30,7 +30,10 @@ int main(void) {
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-	window = glfwCreateWindow(960, 540, "Hello World", NULL, NULL);
+	int width = 960;
+	int height = 540;
+
+	window = glfwCreateWindow(width, height, "Hello World", NULL, NULL);
 	if (!window) {
 		glfwTerminate();
 		return -1;
@@ -70,15 +73,16 @@ int main(void) {
 
 		IndexBuffer ib(indices, 6);
 
-		mat4 proj = ortho(0.0f, 960.0f, 0.0f, 540.0f, -1.0f, 1.0f);
-		vec4 vp(100.0f, 100.0f, 0.0f, 1.0f);
+		mat4 proj = ortho(0.0f, (float)width, 0.0f, (float)height, -1.0f, 1.0f);
+		mat4 view = translate(mat4(1.0f), vec3(-100, 0, 0));
+		mat4 model = translate(mat4(1.0f), vec3(200, 200, 0));
 
-		// vec4 result = proj * vp;
+		mat4 mvp = proj * view * model;
 
 		Shader shader("res/shaders/Basic.shader");
 		shader.Bind();
 		shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
-		shader.SetUniformMat4f("u_MVP", proj);
+		shader.SetUniformMat4f("u_MVP", mvp);
 
 		Texture texture("res/textures/ChernoLogo.png");
 		texture.Bind();
