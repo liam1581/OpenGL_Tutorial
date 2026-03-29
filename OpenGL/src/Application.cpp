@@ -1,26 +1,15 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-#include <fstream>
-#include <iostream>
-#include <sstream>
-#include <string>
-
-#include "IndexBuffer.h"
-#include "Renderer.h"
-#include "Shader.h"
-#include "Texture.h"
-#include "VertexArray.h"
-#include "VertexBuffer.h"
-#include "VertexBufferLayout.h"
-#include "tests/TestClearColor.h"
-#include "tests/Test.h"
-
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 
 #include <imgui/imgui.h>
 #include <imgui/imgui_impl_glfw_gl3.h>
+
+#include "tests/Test.h"
+#include "tests/TestClearColor.h"
+#include "tests/TestTexture2D.h"
 
 using namespace std;
 
@@ -66,6 +55,7 @@ int main(void) {
 		currentTest = testMenu;
 
 		testMenu->RegisterTest<test::TestClearColor>("Clear Color");
+		testMenu->RegisterTest<test::TestTexture2D>("2D Texture");
 
 		while (!glfwWindowShouldClose(window)) {
 			GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
